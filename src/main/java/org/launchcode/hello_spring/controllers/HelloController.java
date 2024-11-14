@@ -57,4 +57,44 @@ public class HelloController {
                         "</html>";
         return html;
     }
+
+    @GetMapping("formByLanguage")
+    public String helloFormWithLanguage() {
+        String html =
+                "<html>" +
+                        "<body>" +
+                        "<form action = 'greet' method = 'post'>" +
+                        "<input type = 'text' name = 'name' />" +
+                        "<select name='language'>" +
+                        "<option value='english'>English</option>" +
+                        "<option value='russian'>Russian</option>" +
+                        "<option value='french'>French</option>" +
+                        "<option value='german'>German</option>" +
+                        "<option value='spanish'>Spanish</option>" +
+                        "</select>"+
+                        "<input type = 'submit' value = 'Greet Me!' />" +
+                        "</form>" +
+                        "</body>" +
+                        "</html>";
+        return html;
+    }
+
+   @PostMapping("greet")
+   @ResponseBody
+    public String greetBuyNameAndLanguage(@RequestParam String language, @RequestParam String name){
+        String returnValue = "Hello, ";
+        if(language.equalsIgnoreCase("french")){
+            returnValue = "Bonjour, ";
+        }
+        if(language.equalsIgnoreCase("russian")){
+            returnValue = "Привет, ";
+        }
+        if(language.equalsIgnoreCase("german")){
+            returnValue = "Hallo, ";
+        }
+        if(language.equalsIgnoreCase("spanish")){
+            returnValue = "Ola, ";
+        }
+        return returnValue.concat(name);
+    }
 }
