@@ -95,6 +95,16 @@ public class HelloController {
         if(language.equalsIgnoreCase("spanish")){
             returnValue = "Ola, ";
         }
-        return returnValue.concat(name);
+        return "<html>" +
+                "<body>" +
+                "<h1 style='color:blue;text-align: center;'>" + returnValue.concat(name) + "</h1>" +
+                "<img src='https://media.istockphoto.com/id/1065465342/vector/cute-vector-speech-bubble-icon-with" +
+                "-hello-greeting.jpg?s=612x612&w=0&k=20&c=dIq85nTuC9OGJAuuIUdz0u0EQg2N4pEpWzKxa8S0gbY=' " +
+                "style='display: block; margin-left: auto;" +
+                "  margin-right: auto;" +
+                "  width: 50%;'" +
+                "width=\"500\" height=\"600\">" +
+                "</body>" +
+                "</html>";
     }
 }
