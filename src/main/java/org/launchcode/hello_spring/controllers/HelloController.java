@@ -1,50 +1,49 @@
 package org.launchcode.hello_spring.controllers;
 
-import org.apache.coyote.Response;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Controller
-@ResponseBody
 public class HelloController {
 
     @GetMapping("helloTest")
+    @ResponseBody
     public String hello() {
         return "Hello, Spring!";
     }
 
     @GetMapping("goodbye")
+    @ResponseBody
     public String goodbye() {
         return "Goodbye, Spring!";
     }
 
     //handle requests with name as query param /hello?name=value
     @RequestMapping(value = "hello", method = {RequestMethod.GET, RequestMethod.POST})
-    public String helloWithParams(@RequestParam String name) {
-        return "Hello, ".concat(name);
+    public String helloWithParams(@RequestParam String name, Model model) {
+        String myGreeting = "Hello, " + name + "!";
+        model.addAttribute("greeting", myGreeting);
+        return "hello";
     }
 
     //handle requests with name with path param
     @GetMapping("hello/{name}")
-    public String helloWithParamsAsPath(@PathVariable String name) {
-        return "Hello, ".concat(name);
+    public String helloWithParamsAsPath(@PathVariable String name, Model model) {
+        model.addAttribute("greeting", "Hello, " + name + "!");
+        return "hello";
     }
 
     @GetMapping("form2")
     public String helloForm() {
-        String html =
-                "<html>" +
-                        "<body>" +
-                        "<form method = 'post' action = '/hello'>" +
-                        "<input type = 'text' name = 'name' />" +
-                        "<input type = 'submit' value = 'Greet Me!' />" +
-                        "</form>" +
-                        "</body>" +
-                        "</html>";
-        return html;
+        return "form";
     }
 
     @GetMapping("form")
+    @ResponseBody
     public String helloFormAsQueryParams() {
         String html =
                 "<html>" +
@@ -59,6 +58,7 @@ public class HelloController {
     }
 
     @GetMapping("formByLanguage")
+    @ResponseBody
     public String helloFormWithLanguage() {
         String html =
                 "<html>" +
@@ -106,5 +106,14 @@ public class HelloController {
                 "width=\"500\" height=\"600\">" +
                 "</body>" +
                 "</html>";
+    }
+    @GetMapping("hello-names")
+    public String helloNames(Model model){
+        List<String> names = new ArrayList<>();
+        names.add("Olga");
+        names.add("Java");
+        names.add("Tiger");
+        model.addAttribute("names", names);
+        return "hello-list";
     }
 }
